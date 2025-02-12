@@ -11,6 +11,7 @@ import static fr.isen.java2.db.daos.DataSourceFactory.getDataSource;
 public class GenreDao {
 
 	public List<Genre> listGenres() {
+		// create a list of genres that will be used for return
 		List<Genre> genres = new ArrayList<>();
 		String cmdSQL = "SELECT * FROM genre";
 
@@ -19,10 +20,13 @@ public class GenreDao {
 			 Statement statement = connection.createStatement();
 			 ResultSet resultSet = statement.executeQuery(cmdSQL)) {
 
+			// go trough all results
 			while (resultSet.next()) {
+				// create a new genre & set its values
 				Genre genre = new Genre();
 				genre.setId(resultSet.getInt("idgenre"));
 				genre.setName(resultSet.getString("name"));
+				// add genre to list
 				genres.add(genre);
 			}
 
@@ -34,6 +38,7 @@ public class GenreDao {
 	}
 
 	public Genre getGenre(String name) {
+		// create a genre that will be used for return
 		Genre genre = null;
 		String cmdSQL = "SELECT * FROM genre WHERE name = ?";
 
@@ -45,6 +50,7 @@ public class GenreDao {
 			ResultSet resultSet = statement.executeQuery();
 
 			if (resultSet.next()) {
+				// create a new genre & set its values
 				genre = new Genre();
 				genre.setId(resultSet.getInt("idgenre"));
 				genre.setName(resultSet.getString("name"));
@@ -57,6 +63,7 @@ public class GenreDao {
 		return genre;
 	}
 
+	//not too complicated, no need of extensive comments
 	public void addGenre(String name) {
 		String cmdSQL = "INSERT INTO genre(name) VALUES(?)";
 
